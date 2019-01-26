@@ -1,3 +1,4 @@
+
 import itertools
 import random
 import time
@@ -83,25 +84,31 @@ def blackjack():
         if len(deck)<24:
             deck= list(itertools.product(vals, suits))
             random.shuffle(deck)
-            print (deck)
+            print("Shuffling Deck", end=' ')
+            time.sleep(1) 
+            print('.',end=' ')
+            time.sleep(1)
+            print('.',end=' ')
+            time.sleep(1)
+            print('.')
         print('')
         ODH()
         OPH()
         if cardvalue(DealerHand) == 21:
             if cardvalue(PlayerHand) == 21:
-                print('push')
+                print('push'.upper())
                 show()
                 NewHand()
                 time.sleep(0.0001)
                 continue
             else:
-                print('lose: dealer blackjack')
+                print('lose: dealer blackjack'.upper())
                 show()
                 NewHand()
                 time.sleep(0.0001)
                 continue
         if cardvalue(PlayerHand) == 21:
-            print('win: player backjack')
+            print('win: player backjack'.upper())
             show()
             NewHand()
             time.sleep(0.0001)
@@ -117,7 +124,7 @@ def blackjack():
                 print(PlayerHand)
                 print(cardvalue(PlayerHand))
                 if cardvalue(PlayerHand)> 21:
-                    print('lose: player bust')
+                    print('lose: player bust'.upper())
                     show()
                     NewHand()
                     time.sleep(0.0001)
@@ -133,19 +140,19 @@ def blackjack():
             continue
         DealerPlay(DealerHand)
         if cardvalue(DealerHand)> 21:
-            print('Win: Dealer Bust')
+            print('Win: Dealer Bust'.upper())
             show()
             NewHand()
             time.sleep(0.0001)
             continue
         elif cardvalue(DealerHand) > cardvalue(PlayerHand):
-            print('Lose: Dealer Has The Best Score')
+            print('Lose: Dealer Has The Best Score'.upper())
             show()
             NewHand()
             time.sleep(0.0001)
             continue
         elif cardvalue(DealerHand) < cardvalue(PlayerHand):
-            print('Win: Player Has The Best Score')
+            print('Win: Player Has The Best Score'.upper())
             show()
             NewHand()
             time.sleep(0.0001)
@@ -156,7 +163,7 @@ def blackjack():
             NewHand()
             time.sleep(0.0001)
             continue
-        
-        
+
+blackjack()  
         
         
