@@ -43,8 +43,7 @@ def ODH():
     DealerHand.append(deck[0])
     del deck[0]
     DHV=cardvalue(DealerHand)
-    print(DealerHand)
-    print(DHV)
+    print(DealerHand[0])
 
 def OPH():
     PlayerHand.append(deck[0])
@@ -72,4 +71,58 @@ def DealerPlay(hand):
         return DHV
         
 
-    
+def blackjack():
+    while True:
+        if len(deck)<20:
+            deck = list(itertools.product(vals, suits))
+            random.shuffle(deck)
+        ODH()
+        OPH()
+        if cardvalue(DealerHand) == 21:
+            if cardvalue(PlayerHand) == 21:
+                print('push')
+                NewHand()
+                continue
+            else:
+                print('lose: dealer blackjack')
+                NewHand()
+                continue
+        if cardvalue(PlayerHand) == 21:
+            print('win: player backjack')
+            NewHand()
+            continue
+
+
+
+
+        while True:
+            playeroption = int(input('Do you want to hit(1) or hold(2): '))
+            if playeroption == 1:
+                hit(PlayerHand):
+                if cardvalue(PlayerHand)> 21:
+                    print('lose: player bust')
+                    NewHand()
+                    continue
+                print(PlayerHand)
+                print(cardvalue(PlayerHand))
+                continue
+            if playeroption == 2:
+                break
+        DealerPlay()
+        if cardvalue(DealerHand)> 21:
+            print('Win: Dealer Bust')
+            NewHand()
+            continue
+        elif cardvalue(DealerHand) > cardvalue(PlayerHand):
+            print('Lose: Dealer Has The Best Score')
+            NewHand()
+            continue
+        elif cardvalue(DealerHand) < cardvalue(PlayerHand):
+            print('Win: Player Has The Best Score')
+            NewHand()
+            continue
+        else:
+            print('push')
+            NewHand()
+            continue
+        
