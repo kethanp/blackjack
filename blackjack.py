@@ -1,11 +1,15 @@
 import itertools
 import random
+import time
 vals = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace']
 suits = ['spades', 'clubs', 'hearts', 'diamonds']
-deck = list(itertools.product(vals, suits))
+global deck
+deck= list(itertools.product(vals, suits))
 random.shuffle(deck)
 PlayerHand=[]
 DealerHand=[]
+
+
 def cardvalue(hand):
     value=0
     for card in range(len(hand)):
@@ -43,16 +47,16 @@ def ODH():
     DealerHand.append(deck[0])
     del deck[0]
     DHV=cardvalue(DealerHand)
-    print(DealerHand[0])
+    print("Dealers Card: " + str(DealerHand[0]))
 
 def OPH():
     PlayerHand.append(deck[0])
     del deck[0]
     PlayerHand.append(deck[0])
     del deck[0]
-    PHV=cardvalue(DealerHand)
-    print(PlayerHand)
-    print(PHV)
+    PHV=cardvalue(PlayerHand)
+    print("Player Hand: "+ str(PlayerHand))
+    print("Your Hand Value: "+str(PHV))
     
 def NewHand():
     DealerHand.clear()
@@ -70,59 +74,89 @@ def DealerPlay(hand):
     else:
         return DHV
         
-
+def show():
+    print("Dealer Hand Value: "+str(cardvalue(DealerHand)))
+   
 def blackjack():
     while True:
-        if len(deck)<20:
-            deck = list(itertools.product(vals, suits))
+        global deck
+        if len(deck)<24:
+            deck= list(itertools.product(vals, suits))
             random.shuffle(deck)
+            print (deck)
+        print('')
         ODH()
         OPH()
         if cardvalue(DealerHand) == 21:
             if cardvalue(PlayerHand) == 21:
                 print('push')
+                show()
                 NewHand()
+                time.sleep(0.0001)
                 continue
             else:
                 print('lose: dealer blackjack')
+                show()
                 NewHand()
+                time.sleep(0.0001)
                 continue
         if cardvalue(PlayerHand) == 21:
             print('win: player backjack')
+            show()
             NewHand()
+            time.sleep(0.0001)
             continue
 
 
+        playerLose=True
 
-
-        while True:
-            playeroption = int(input('Do you want to hit(1) or hold(2): '))
-            if playeroption == 1:
-                hit(PlayerHand):
-                if cardvalue(PlayerHand)> 21:
-                    print('lose: player bust')
-                    NewHand()
-                    continue
+        while playerLose:
+            playeroption = (input('Do you want to hit(1) or hold(2): '))
+            if playeroption == '1':
+                hit(PlayerHand)
                 print(PlayerHand)
                 print(cardvalue(PlayerHand))
+                if cardvalue(PlayerHand)> 21:
+                    print('lose: player bust')
+                    show()
+                    NewHand()
+                    time.sleep(0.0001)
+                    playerLose=False
+                    continue
+                
                 continue
-            if playeroption == 2:
+            if playeroption == '2':
                 break
-        DealerPlay()
+            else:
+                continue
+        if playerLose==False:
+            continue
+        DealerPlay(DealerHand)
         if cardvalue(DealerHand)> 21:
             print('Win: Dealer Bust')
+            show()
             NewHand()
+            time.sleep(0.0001)
             continue
         elif cardvalue(DealerHand) > cardvalue(PlayerHand):
             print('Lose: Dealer Has The Best Score')
+            show()
             NewHand()
+            time.sleep(0.0001)
             continue
         elif cardvalue(DealerHand) < cardvalue(PlayerHand):
             print('Win: Player Has The Best Score')
+            show()
             NewHand()
+            time.sleep(0.0001)
             continue
         else:
             print('push')
+            show()
             NewHand()
+            time.sleep(0.0001)
             continue
+        
+        
+        
         
